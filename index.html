@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TypeRacer Clone + Auto-Typer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>⌨️ TypeRacer<span>re</span></h1>
+    <button id="newRace">New Race</button>
+  </header>
+
+  <main>
+    <section id="track"></section>
+
+    <div id="status">Press <b>New Race</b> to start.</div>
+
+    <section id="passageBox">
+      <div id="passage"></div>
+      <input id="typeInput" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" disabled placeholder="Type the above text here when the race begins" />
+    </section>
+
+    <section id="stats">
+      <div><label>WPM</label><span id="wpm">0</span></div>
+      <div><label>Accuracy</label><span id="acc">100%</span></div>
+      <div><label>Time</label><span id="time">0.0s</span></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+  <script src="autotyper.js"></script>
+</body>
+</html>

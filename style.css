@@ -1,0 +1,41 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: "Segoe UI", Arial, sans-serif; background: #eef1f5; color: #222; }
+header { display: flex; justify-content: space-between; align-items: center; padding: 12px 24px; background: #1d3557; color: #fff; }
+header h1 { margin: 0; font-size: 22px; }
+header h1 span { color: #e63946; }
+button { cursor: pointer; border: 0; border-radius: 6px; padding: 8px 16px; font-weight: 600; background: #e63946; color: #fff; }
+button:hover { filter: brightness(1.1); }
+main { max-width: 860px; margin: 24px auto; padding: 0 16px; }
+
+#track { background: #fff; border-radius: 8px; padding: 12px; margin-bottom: 12px; }
+.lane { position: relative; height: 34px; border-bottom: 2px dashed #ccc; margin: 4px 0; }
+.lane:last-child { border-bottom: 0; }
+.car { position: absolute; top: 2px; left: 0; font-size: 24px; transition: left .2s linear; transform: scaleX(-1); }
+.lane .name { position: absolute; right: 4px; top: 8px; font-size: 12px; color: #666; }
+.lane.you .name { color: #e63946; font-weight: 700; }
+
+#status { text-align: center; font-size: 18px; margin: 12px 0; min-height: 26px; }
+#passageBox { background: #fff; border-radius: 8px; padding: 18px; }
+#passage { font-size: 20px; line-height: 1.6; margin-bottom: 14px; user-select: none; }
+#passage .done { color: #2a9d8f; }
+#passage .current { text-decoration: underline; }
+#passage .current .ok { color: #2a9d8f; }
+#passage .current .bad { background: #f4a4aa; color: #900; }
+#typeInput { width: 100%; font-size: 20px; padding: 10px; border: 2px solid #bbb; border-radius: 6px; }
+#typeInput.error { background: #fde2e4; border-color: #e63946; }
+
+#stats { display: flex; gap: 12px; margin-top: 12px; }
+#stats div { flex: 1; background: #fff; border-radius: 8px; padding: 12px; text-align: center; }
+#stats label { display: block; font-size: 12px; color: #888; text-transform: uppercase; }
+#stats span { font-size: 26px; font-weight: 700; }
+
+/* Auto-typer panel */
+#autoTyper { position: fixed; right: 16px; bottom: 16px; width: 250px; background: #1d3557; color: #fff; border-radius: 10px; padding: 14px; box-shadow: 0 6px 20px rgba(0,0,0,.25); font-size: 14px; z-index: 9999; }
+#autoTyper h3 { margin: 0 0 10px; font-size: 15px; }
+#autoTyper label { display: flex; justify-content: space-between; margin: 8px 0 2px; }
+#autoTyper input[type=range] { width: 100%; }
+#autoTyper .row { display: flex; gap: 8px; margin-top: 10px; }
+#autoTyper .row button { flex: 1; }
+#autoTyper #atStop { background: #6c757d; }
+#autoTyper .check { justify-content: flex-start; gap: 6px; }
+#autoTyper #atLog { margin-top: 8px; font-size: 12px; opacity: .8; min-height: 16px; }
