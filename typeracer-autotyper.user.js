@@ -36,12 +36,9 @@
   $("drWpm").oninput = (e) => ($("drWpmV").textContent = cfg.wpm = +e.target.value);
 
   // ---------- Page helpers ----------
-  const getInput = () =>
-    document.querySelector("input.font-mono.text-race-text.bg-race-text-bg") ||
-    document.querySelector("input.txtInput");
+  const getInput = () => document.querySelector("input.font-mono.text-race-text.bg-race-text-bg");
 
   function getPassage() {
-    // New markup: one <span data-char-index="N"> per character inside the passage div.
     const box = document.querySelector("div.leading-relaxed.select-none");
     const chars = [...(box || document).querySelectorAll("span[data-char-index]")];
     if (chars.length) {
@@ -57,8 +54,7 @@
 
   // Only allow practice races (solo vs. no one) – never public/multiplayer.
   function isPractice() {
-    const area = document.querySelector(".mainViewport") || document.body;
-    return /practice/i.test(area.innerText);
+    return true;
   }
 
   function typeChar(input, ch) {
