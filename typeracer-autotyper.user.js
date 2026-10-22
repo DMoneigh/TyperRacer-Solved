@@ -41,11 +41,18 @@
     document.querySelector("input.txtInput");
 
   function getPassage() {
-    const spans = document.querySelectorAll('.inputPanel span[unselectable="on"], span[unselectable="on"]');
-    let text = "";
-    const seen = new Set();
-    spans.forEach((s) => { if (!seen.has(s)) { seen.add(s); text += s.textContent; } });
-    return text.replace(/\u00a0/g, " ").replace(/\s+/g, " ").trim();
+    // New markup: one <span data-char-index="N"> per character inside the passage div.
+    const box = document.querySelector("div.leading-relaxed.select-none");
+    const chars = [...(box || document).querySelectorAll("span[data-char-index]")];
+    if (chars.length) {
+      return chars
+        .sort((a, b) => a.dataset.charIndex - b.dataset.charIndex)
+        .map((s) => s.textContent.replace(/\u00a0/g, " "))
+        .join("");
+    }
+    // Legacy markup fallback.
+    const spans = document.querySelectorAll('span[unselectable="on"]');
+    return [...spans].map((s) => s.textContent).join("").replace(/\u00a0/g, " ").replace(/\s+/g, " ").trim();
   }
 
   // Only allow practice races (solo vs. no one) – never public/multiplayer.
