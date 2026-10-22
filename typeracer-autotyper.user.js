@@ -36,7 +36,9 @@
   $("drWpm").oninput = (e) => ($("drWpmV").textContent = cfg.wpm = +e.target.value);
 
   // ---------- Page helpers ----------
-  const getInput = () => document.querySelector("input.txtInput");
+  const getInput = () =>
+    document.querySelector("input.font-mono.text-race-text.bg-race-text-bg") ||
+    document.querySelector("input.txtInput");
 
   function getPassage() {
     const spans = document.querySelectorAll('.inputPanel span[unselectable="on"], span[unselectable="on"]');
