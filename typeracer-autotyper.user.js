@@ -8,13 +8,13 @@
 // ==/UserScript==
 //
 // Usage: install in Tampermonkey/Violentmonkey, OR paste the whole file into the
-// DevTools console on play.typeracer.com. Start a Practice race; the panel
-// (bottom-right) types automatically once the countdown ends.
+// DevTools console on play.typeracer.com. Open a Practice race and press Start
+// in the panel (bottom-right) – it begins typing immediately.
 (() => {
   if (window.__drAutoTyper) return;
   window.__drAutoTyper = true;
 
-  const cfg = { wpm: 90, autoStart: true };
+  const cfg = { wpm: 90 };
 
   // ---------- UI ----------
   const panel = document.createElement("div");
@@ -25,17 +25,15 @@
     <b>🤖 Practice Auto-Typer</b>
     <div style="margin:8px 0 2px;display:flex;justify-content:space-between">Speed <span><b id="drWpmV">${cfg.wpm}</b> WPM</span></div>
     <input id="drWpm" type="range" min="20" max="200" value="${cfg.wpm}" style="width:100%">
-    <label style="display:block;margin:6px 0"><input id="drAuto" type="checkbox" checked> Auto-start</label>
-    <div style="display:flex;gap:6px">
+    <div style="display:flex;gap:6px;margin-top:8px">
       <button id="drStart" style="flex:1;padding:6px;border:0;border-radius:5px;background:#e63946;color:#fff;cursor:pointer">Start</button>
       <button id="drStop"  style="flex:1;padding:6px;border:0;border-radius:5px;background:#6c757d;color:#fff;cursor:pointer">Stop</button>
     </div>
-    <div id="drLog" style="margin-top:8px;font-size:12px;opacity:.85">Waiting for a practice race…</div>`;
+    <div id="drLog" style="margin-top:8px;font-size:12px;opacity:.85">Press Start to begin typing.</div>`;
   document.body.appendChild(panel);
   const $ = (id) => document.getElementById(id);
   const log = (m) => ($("drLog").textContent = m);
   $("drWpm").oninput = (e) => ($("drWpmV").textContent = cfg.wpm = +e.target.value);
-  $("drAuto").onchange = (e) => (cfg.autoStart = e.target.checked);
 
   // ---------- Page helpers ----------
   const getInput = () => document.querySelector("input.txtInput");
@@ -77,7 +75,7 @@
   function step() {
     if (!running) return;
     const input = getInput();
-    if (!input || input.disabled || input.readOnly || idx >= text.length) return stop("Done ✅");
+    if (!input || idx >= text.length) return stop("Done ✅");
     typeChar(input, text[idx++]);
     log(`Typing… ${Math.round((idx / text.length) * 100)}%`);
     timer = setTimeout(step, delay());
@@ -87,7 +85,7 @@
     if (running) return;
     if (!isPractice()) return log("⛔ Practice races only.");
     const input = getInput();
-    if (!input || input.disabled || input.readOnly) return log("Waiting for countdown…");
+    if (!input) return log("Couldn't find the typing box.");
     text = getPassage();
     if (!text) return log("Couldn't find passage text.");
     idx = input.value.length; // resume if something is already typed
@@ -99,14 +97,4 @@
 
   $("drStart").onclick = start;
   $("drStop").onclick = () => stop();
-
-  // Auto-start: watch for the input box becoming typeable.
-  let wasReady = false;
-  setInterval(() => {
-    const input = getInput();
-    const ready = !!input && !input.disabled && !input.readOnly && input.offsetParent !== null;
-    if (ready && !wasReady && cfg.autoStart) start();
-    if (!ready && running) stop("Done ✅");
-    wasReady = ready;
-  }, 200);
 })();
